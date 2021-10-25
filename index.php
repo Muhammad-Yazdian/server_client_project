@@ -16,6 +16,28 @@
  *   3- Send a request to the server
  *   4- Display received information from the server
  */
+
+// Connect to database
+include('../config/connect_db.php');
+
+$DEBUG = 1;
+
+if ($conn) {
+  if ($DEBUG) echo '<p style="color:green;">Successful connection</p>';
+  $sql = "SELECT * FROM `country`";
+  $result = mysqli_query($conn, $sql);
+  $countries = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  mysqli_free_result($result);
+  mysqli_close($conn);
+  if ($DEBUG) {
+    echo '<pre>';
+    print_r($countries);
+    echo '</pre>';
+  }
+} else {
+  echo '<p style="color:red;">Error: Could not connect to the database</p>';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +57,7 @@
   <!--   
     This is just a static template. Later on, populate the list based on 
     countries in DB
-  -->  
+  -->
   <div>
     <label for="country-list">Select a country:</label>
     <select id="country-list" name="country-list">
