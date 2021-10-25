@@ -31,7 +31,6 @@
 <body>
   <h1>Server-Client Project (Countries)</h1>
   <hr>
-  
   <!-- Create a country select menu -->
   <!--   
     This is just a static template. Later on, populate the list based on 
@@ -47,6 +46,26 @@
       <option value="Others">Others</option>
     </select>
   </div>
+  <hr>
+  <!-- Step 4: Display received information from the server -->
+  <!-- This a tempplate for what information to be displayed -->
+  <div>
+    <label for="country-name">Country:</label>
+    <output id="country-name">TBD</output>
+    <br>
+    <label for="country-code">Code:</label>
+    <output id="country-code">TBD</output>
+    <br>
+    <label for="country-population">Population:</label>
+    <output id="country-population">TBD</output>
+    <br>
+    <label for="country-population-date">Population date:</label>
+    <output id="country-population-date">TBD</output>
+    <br>
+    <label for="country-capital">Capital:</label>
+    <output id="country-capital">TBD</output>
+  </div>
+
 </body>
 
 </html>
