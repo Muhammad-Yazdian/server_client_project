@@ -20,7 +20,7 @@
 // Connect to database
 include('../config/connect_db.php');
 
-$DEBUG = 1;
+$DEBUG = 0;
 
 if ($conn) {
   if ($DEBUG) echo '<p style="color:green;">Successful connection</p>';
@@ -54,18 +54,13 @@ if ($conn) {
   <h1>Server-Client Project (Countries)</h1>
   <hr>
   <!-- Create a country select menu -->
-  <!--   
-    This is just a static template. Later on, populate the list based on 
-    countries in DB
-  -->
+  <?php echo '<p>There are ' . count($countries) . ' countries in the database.'; ?>
   <div>
     <label for="country-list">Select a country:</label>
     <select id="country-list" name="country-list">
-      <option value="China">China</option>
-      <option value="Iran">Iran</option>
-      <option value="Switzerlander">Switzerlander</option>
-      <option value="United States">Unites States</option>
-      <option value="Others">Others</option>
+      <?php foreach ($countries as $country) {
+        echo '<option value="' . $country['Name'] . '">' . $country['Name'] . '</option>';
+      } ?>
     </select>
   </div>
   <hr>
