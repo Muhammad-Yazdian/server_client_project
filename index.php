@@ -48,7 +48,7 @@ if ($conn) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Server-Client Project</title>
-  <script src="js/country_contents_loader.js"></script>
+
 </head>
 
 <body>
@@ -58,13 +58,14 @@ if ($conn) {
   <?php echo '<p>There are ' . count($countries) . ' countries in the database.'; ?>
   <div>
     <label for="country-list">Select a country:</label>
-    <select id="country-list" name="country-list" onchange="updateDisplayedCountryInfo()">
+    <select id="country-list" name="country-list" onchange="updateDisplayedCountryInfo(this)">
       <?php foreach ($countries as $country) {
         echo '<option value="' . $country['Name'] . '">' . $country['Name'] . '</option>';
       } ?>
     </select>
   </div>
   <hr>
+
   <!-- Step 4: Display received information from the server -->
   <!-- This a tempplate for what information to be displayed -->
   <div>
@@ -83,6 +84,15 @@ if ($conn) {
     <label for="country-capital">Capital:</label>
     <output id="country-capital">TBD</output>
   </div>
+
+  <script>
+    // Convert php $countries array to javascript countries array
+    <?php
+    $countries_json = json_encode($countries);
+    echo "var countries = " . $countries_json . ";";
+    ?>
+  </script>
+  <script src="js/country_contents_loader.js"></script>
 
 </body>
 

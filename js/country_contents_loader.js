@@ -10,6 +10,7 @@
  *   tags in index.php file
  */
 
-function updateDisplayedCountryInfo(){
-    console.log('Updated');
+function updateDisplayedCountryInfo(country){
+    console.log(country.value);
+    console.log(countries);
 } 
