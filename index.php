@@ -59,9 +59,13 @@ if ($conn) {
   <div>
     <label for="country-list">Select a country:</label>
     <select id="country-list" name="country-list" onchange="updateDisplayedCountryInfo(this)">
-      <?php foreach ($countries as $country) {
-        echo '<option value="' . $country['Name'] . '">' . $country['Name'] . '</option>';
-      } ?>
+      <?php 
+      $country_id = 0;
+      foreach ($countries as $country) {
+        echo '<option value="' . $country_id . '">' . $country['Name'] . '</option>';
+        $country_id++;
+      } 
+      ?>
     </select>
   </div>
   <hr>

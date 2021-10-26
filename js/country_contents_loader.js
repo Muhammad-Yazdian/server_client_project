@@ -10,7 +10,14 @@
  *   tags in index.php file
  */
 
-function updateDisplayedCountryInfo(country){
-    console.log(country.value);
-    console.log(countries);
+//console.log(countries);
+console.log(countries[0]);
+
+function updateDisplayedCountryInfo(countryId){
+    countaryInfo = countries[countryId.value];
+    console.log(countries[countryId.value]);
+    document.getElementById("country-name").textContent = countaryInfo['Name'];
+    document.getElementById("country-code").textContent = countaryInfo['Code'];
+    document.getElementById("country-population").textContent = countaryInfo['Population'];
+    document.getElementById("country-capital").textContent = countaryInfo['Capital'];
 } 
