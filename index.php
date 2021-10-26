@@ -48,6 +48,7 @@ if ($conn) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Server-Client Project</title>
+  <script src="js/country_contents_loader.js"></script>
 </head>
 
 <body>
@@ -57,7 +58,7 @@ if ($conn) {
   <?php echo '<p>There are ' . count($countries) . ' countries in the database.'; ?>
   <div>
     <label for="country-list">Select a country:</label>
-    <select id="country-list" name="country-list">
+    <select id="country-list" name="country-list" onchange="updateDisplayedCountryInfo()">
       <?php foreach ($countries as $country) {
         echo '<option value="' . $country['Name'] . '">' . $country['Name'] . '</option>';
       } ?>
