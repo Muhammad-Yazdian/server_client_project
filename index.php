@@ -48,21 +48,26 @@ if ($conn) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Server-Client Project</title>
-
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
   <h1>Server-Client Project (Countries)</h1>
   <hr>
   <!-- Create a country select menu -->
-  <?php echo '<p>There are ' . count($countries) . ' countries in the database.'; ?>
+  <?php echo '<p>There are ' . count($countries) . 
+             ' countries in the database.'; ?>
   <div>
     <label for="country-list">Select a country:</label>
-    <select id="country-list" name="country-list" onchange="updateDisplayedCountryInfo(this)">
+    <select id="country-list" name="country-list" 
+            onchange="updateDisplayedCountryInfo(this)">
       <?php 
       $country_id = 0;
       foreach ($countries as $country) {
-        echo '<option value="' . $country_id . '">' . $country['Name'] . '</option>';
+        echo '<option value="' . $country_id . '">' . 
+              $country['Name'] . '</option>';
         $country_id++;
       } 
       ?>
@@ -89,6 +94,9 @@ if ($conn) {
     <output id="country-capital">TBD</output>
   </div>
 
+  <hr>
+  <table id="tblCountries" class="display" width="100%"></table>
+
   <script>
     // Convert php $countries array to javascript countries array
     <?php
@@ -97,6 +105,34 @@ if ($conn) {
     ?>
   </script>
   <script src="js/country_contents_loader.js"></script>
+  <script>
+    $(document).ready(function(){
+      populateTable();
+    });
+    
+    function populateTable(){
+      $("#tblCountries").DataTable({
+        data : countries,
+        "columns" : [
+          { "data" : "Name" },
+          { "data" : "Region" },
+          { "data" : "Continent" },
+          { "data" : "Capital" },
+          { "data" : "SurfaceArea" },
+          { "data" : "Population" },
+          { "data" : "IndepYear" },
+          { "data" : "LifeExpectancy" },
+          { "data" : "HeadOfState" },
+          { "data" : "LocalName" },
+          { "data" : "Code" },
+          { "data" : "Code2" },
+          { "data" : "GNP" },
+          { "data" : "GNPOld" },
+          { "data" : "raGovernmentFormce" }
+        ]
+      });
+    }
+  </script>
 
 </body>
 
