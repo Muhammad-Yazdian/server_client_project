@@ -28,12 +28,51 @@ if ($conn) {
   $result = mysqli_query($conn, $sql);
   $countries = mysqli_fetch_all($result, MYSQLI_ASSOC);
   mysqli_free_result($result);
-  mysqli_close($conn);
+  
   if ($DEBUG) {
     echo '<pre>';
     print_r($countries);
     echo '</pre>';
   }
+
+  $sql = "SELECT `Name`, `Population` FROM `country` 
+          WHERE `Population` =  (SELECT Min(`Population`) FROM `country`)";
+  $result = mysqli_query($conn, $sql);
+  $least_populated_country = mysqli_fetch_assoc($result);
+  mysqli_free_result($result);
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
+                $least_populated_country["Population"] . 
+                ' people, is the least populated countary.</p>'; 
+
+  $sql = "SELECT `Name`, `Population` FROM `country` 
+          WHERE `Population` =  (SELECT Max(`Population`) FROM `country`)";
+  $result = mysqli_query($conn, $sql);
+  $least_populated_country = mysqli_fetch_assoc($result);
+  mysqli_free_result($result);
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
+                $least_populated_country["Population"] . 
+                ' people, is the most populated countary.</p>'; 
+
+  $sql = "SELECT `Name`, `SurfaceArea` FROM `country` 
+          WHERE `SurfaceArea` =  (SELECT Min(`SurfaceArea`) FROM `country`)";
+  $result = mysqli_query($conn, $sql);
+  $least_populated_country = mysqli_fetch_assoc($result);
+  mysqli_free_result($result);
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
+                $least_populated_country["SurfaceArea"] . 
+                ' meter square area, is the smallest countary.</p>'; 
+
+  $sql = "SELECT `Name`, `SurfaceArea` FROM `country` 
+          WHERE `SurfaceArea` =  (SELECT Max(`SurfaceArea`) FROM `country`)";
+  $result = mysqli_query($conn, $sql);
+  $least_populated_country = mysqli_fetch_assoc($result);
+  mysqli_free_result($result);
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
+                $least_populated_country["SurfaceArea"] . 
+                ' meter square area, is the largest countary.</p>'; 
+
+  mysqli_close($conn);
+
 } else {
   echo '<p style="color:red;">Error: Could not connect to the database</p>';
 }
@@ -93,6 +132,12 @@ if ($conn) {
     <label for="country-capital">Capital:</label>
     <output id="country-capital">TBD</output>
   </div>
+
+  <div>
+    The captal is ...
+  </div>
+
+  <h1>Countries with less than 8,000,000 population</h1>
 
   <hr>
   <table id="tblCountries" class="display" width="100%"></table>
