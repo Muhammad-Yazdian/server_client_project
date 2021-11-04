@@ -28,50 +28,51 @@ if ($conn) {
   $result = mysqli_query($conn, $sql);
   $countries = mysqli_fetch_all($result, MYSQLI_ASSOC);
   mysqli_free_result($result);
-  
+
   if ($DEBUG) {
     echo '<pre>';
     print_r($countries);
     echo '</pre>';
   }
-
+  echo '<div style="background-color: lightblue;">';
+  echo '<h3>Few stats:</h3>';
   $sql = "SELECT `Name`, `Population` FROM `country` 
           WHERE `Population` =  (SELECT Min(`Population`) FROM `country`)";
   $result = mysqli_query($conn, $sql);
   $least_populated_country = mysqli_fetch_assoc($result);
   mysqli_free_result($result);
-  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
-                $least_populated_country["Population"] . 
-                ' people, is the least populated countary.</p>'; 
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' .
+    $least_populated_country["Population"] .
+    ' people, is the least populated countary.</p>';
 
   $sql = "SELECT `Name`, `Population` FROM `country` 
           WHERE `Population` =  (SELECT Max(`Population`) FROM `country`)";
   $result = mysqli_query($conn, $sql);
   $least_populated_country = mysqli_fetch_assoc($result);
   mysqli_free_result($result);
-  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
-                $least_populated_country["Population"] . 
-                ' people, is the most populated countary.</p>'; 
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' .
+    $least_populated_country["Population"] .
+    ' people, is the most populated countary.</p>';
 
   $sql = "SELECT `Name`, `SurfaceArea` FROM `country` 
           WHERE `SurfaceArea` =  (SELECT Min(`SurfaceArea`) FROM `country`)";
   $result = mysqli_query($conn, $sql);
   $least_populated_country = mysqli_fetch_assoc($result);
   mysqli_free_result($result);
-  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
-                $least_populated_country["SurfaceArea"] . 
-                ' meter square area, is the smallest countary.</p>'; 
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' .
+    $least_populated_country["SurfaceArea"] .
+    ' meter square area, is the smallest countary.</p>';
 
   $sql = "SELECT `Name`, `SurfaceArea` FROM `country` 
           WHERE `SurfaceArea` =  (SELECT Max(`SurfaceArea`) FROM `country`)";
   $result = mysqli_query($conn, $sql);
   $least_populated_country = mysqli_fetch_assoc($result);
   mysqli_free_result($result);
-  echo '<p>' .  $least_populated_country["Name"] . ', with ' . 
-                $least_populated_country["SurfaceArea"] . 
-                ' meter square area, is the largest countary.</p>'; 
-
-  mysqli_close($conn);
+  echo '<p>' .  $least_populated_country["Name"] . ', with ' .
+    $least_populated_country["SurfaceArea"] .
+    ' meter square area, is the largest countary.</p>';
+  echo '</div>';
+  //mysqli_close($conn);
 
 } else {
   echo '<p style="color:red;">Error: Could not connect to the database</p>';
@@ -96,19 +97,19 @@ if ($conn) {
   <h1>Server-Client Project (Countries)</h1>
   <hr>
   <!-- Create a country select menu -->
-  <?php echo '<p>There are ' . count($countries) . 
-             ' countries in the database.'; ?>
+  <?php echo '<p>There are ' . count($countries) .
+    ' countries in the database.'; ?>
   <div>
-    <label for="country-list">Select a country:</label>
+    <label for="country-list">Select a country (client side):</label>
     <select id="country-list" name="country-list" 
             onchange="updateDisplayedCountryInfo(this)">
-      <?php 
+      <?php
       $country_id = 0;
       foreach ($countries as $country) {
-        echo '<option value="' . $country_id . '">' . 
-              $country['Name'] . '</option>';
+        echo '<option value="' . $country_id . '">' .
+          $country['Name'] . '</option>';
         $country_id++;
-      } 
+      }
       ?>
     </select>
   </div>
@@ -136,10 +137,39 @@ if ($conn) {
   <div>
     The captal is ...
   </div>
-
-  <h1>Countries with less than 8,000,000 population</h1>
+  <hr>
+  <div>
+    <label for="country-list-2">Select a country (server side):</label>
+    <select id="country-list-2" name="country-list-2" 
+            onchange="updateDisplayedCountryInfo2(this)">
+      <option value="">Select a country</option>
+      <?php
+      require_once '../config/connect_db.php';
+      $sql = "SELECT * FROM `country`";
+      $result = mysqli_query($conn, $sql);
+      while ($country_2 = mysqli_fetch_array($result)) {
+      ?>
+        <option value="<?php echo $country_2['Code']; ?>">
+                       <?php echo $country_2["Name"]; ?></option>
+      <?php
+      }
+      mysqli_free_result($result);
+      ?>
+    </select>
+  </div>
+  <div>
+    <label for="cities-list">Select a city:</label>
+    <select id="cities-list" name="cities-list" onchange=""></select>
+  </div>
+  <div>
+  <label for="banks-list">Select a bank:</label>
+    <select id="banks-list" name="banks-list" onchange=""></select>
+  </div>
+  <!-- TODO(SMY): Write a function query -->
+  <p>Countries with less than 8,000,000 population:</p> 
 
   <hr>
+  <h1>Countary Table</h1>
   <table id="tblCountries" class="display" width="100%"></table>
 
   <script>
@@ -154,7 +184,7 @@ if ($conn) {
     $(document).ready(function(){
       populateTable();
     });
-    
+
     function populateTable(){
       $("#tblCountries").DataTable({
         data : countries,
