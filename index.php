@@ -203,7 +203,7 @@ if ($conn) {
           { "data" : "Code2" },
           { "data" : "GNP" },
           { "data" : "GNPOld" },
-          { "data" : "raGovernmentFormce" }
+          { "data" : "GovernmentForm" }
         ]
       });
     }
