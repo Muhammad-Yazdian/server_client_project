@@ -99,6 +99,7 @@ if ($conn) {
   <!-- Create a country select menu -->
   <?php echo '<p>There are ' . count($countries) .
     ' countries in the database.'; ?>
+  <hr>
   <div>
     <label for="country-list">Select a country (client side):</label>
     <select id="country-list" name="country-list" 
@@ -113,10 +114,6 @@ if ($conn) {
       ?>
     </select>
   </div>
-  <hr>
-
-  <!-- Step 4: Display received information from the server -->
-  <!-- This a tempplate for what information to be displayed -->
   <div>
     <label for="country-name">Country:</label>
     <output id="country-name">TBD</output>
@@ -132,10 +129,8 @@ if ($conn) {
     <br>
     <label for="country-capital">Capital:</label>
     <output id="country-capital">TBD</output>
-  </div>
-
-  <div>
-    The captal is ...
+    <!-- TODO(SMY): Connect to server to get the capital name  -->
+    <p>The capital name is ...</p> 
   </div>
   <hr>
   <div>
@@ -169,7 +164,7 @@ if ($conn) {
   <p>Countries with less than 8,000,000 population:</p> 
 
   <hr>
-  <h1>Countary Table</h1>
+  <h1>Country Table</h1>
   <table id="tblCountries" class="display" width="100%"></table>
 
   <script>
